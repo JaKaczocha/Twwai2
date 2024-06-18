@@ -20,6 +20,8 @@ const DashboardActivity: React.FC = () => {
     return storedDeviceId ? parseInt(storedDeviceId) : 1;
   });
   const [tokenValid, setTokenValid] = useState(true); // State to track token validity
+  const [latestDateString, setLatestDateString] = useState<string>('');
+
   const chartRef = useRef<Chart | null>(null);
   const socketRef = useRef<Socket | null>(null);
 
@@ -58,7 +60,7 @@ const DashboardActivity: React.FC = () => {
     };
 
     fetchData();
-  }, [selectedDeviceId]);
+  }, [selectedDeviceId, latestDateString]);
 
   useEffect(() => {
     const socket = io('http://localhost:3100');
@@ -80,12 +82,37 @@ const DashboardActivity: React.FC = () => {
     }
   }, [latestReadings]);
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      fetchLatestDateString();
+
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  const fetchLatestDateString = async () => {
+    try {
+      const response = await fetch(`http://localhost:3100/api/data3/${selectedDeviceId}/latestDate`);
+      if (response.ok) {
+        const data = await response.json();
+        setLatestDateString(data);
+        console.log("new data " + data);
+      } else {
+        console.error('Failed to fetch latest date:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error fetching latest date:', error);
+    }
+  };
+
   const handleDeviceChange = (deviceId: number) => {
     setSelectedDeviceId(deviceId - 1); // Adjust deviceId here based on your application logic
     localStorage.setItem('selectedDeviceId', String(deviceId - 1));
   };
 
   const renderChart = () => {
+    
     if (chartRef.current) {
       chartRef.current.destroy();
     }
@@ -105,6 +132,7 @@ const DashboardActivity: React.FC = () => {
         datasets: [
           {
             label: 'Temperature',
+           
             data: temperatures,
             borderColor: 'rgba(255, 99, 132, 1)',
             backgroundColor: 'rgba(255, 99, 132, 0.2)',
@@ -113,6 +141,7 @@ const DashboardActivity: React.FC = () => {
           {
             label: 'Pressure',
             data: pressures,
+            hidden: true,
             borderColor: 'rgba(54, 162, 235, 1)',
             backgroundColor: 'rgba(54, 162, 235, 0.2)',
             tension: 0.3,
@@ -189,6 +218,7 @@ const DashboardActivity: React.FC = () => {
             ))}
           </div>
         </div>
+        
       </div>
     </div>
   );

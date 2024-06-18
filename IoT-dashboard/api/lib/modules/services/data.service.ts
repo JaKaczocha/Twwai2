@@ -62,6 +62,19 @@ public async createData(dataParams: IData) {
             throw new Error('data delete fail');
         }
     }
+
+    
+    public async getLatestReadingDateForDevice(deviceId: number): Promise<Date | null> {
+        try {
+            // Pobierz tylko jedną najnowszą datę posortowaną malejąco
+            const latestData = await DataModel.findOne({ deviceId }).sort({ readingDate: -1 }).limit(1).select('readingDate').exec();
+            return latestData ? latestData.readingDate : null;
+        } catch (error) {
+            console.error(`DataService Error: ${error}`);
+            throw error;
+        }
+    }
+    
  
  }
  

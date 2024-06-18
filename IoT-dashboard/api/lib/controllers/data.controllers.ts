@@ -7,8 +7,10 @@ import Joi = require('joi');
 
 import { auth } from '../middlewares/auth.middleware';
 import { admin } from '../middlewares/admin.middleware';
+
 class DataController implements Controller {
     public path = '/api/data';
+    public path3 = '/api/data3';
     public router = Router();
     
 
@@ -26,6 +28,7 @@ class DataController implements Controller {
         this.router.get(`${this.path}/:id/:num/:userId`,auth,checkIdParam,  this.getEntriesInRangeById);
         this.router.delete(`${this.path}/all/:userId`,auth, admin, this.deleteAllEntries);
         this.router.delete(`${this.path}/:id/:userId`,auth,admin,checkIdParam,  this.deleteEntryById);
+        this.router.get(`${this.path3}/:id/latestDate`,checkIdParam, this.getLatestDataForDevice);
     }
 
     private getEntryById = async (request: Request, response: Response, next: NextFunction) => {
@@ -97,6 +100,28 @@ class DataController implements Controller {
         await this.dataService.deleteData({ deviceId: id });
         response.sendStatus(200);
     };
+
+    private getLatestDataForDevice = async (request: Request, response: Response, next: NextFunction) => {
+        const { id } = request.params;
+    
+        try {
+            // Wywołaj metodę usługi danych, aby pobrać najnowszą datę dla określonego urządzenia
+            const latestData = await this.dataService.getLatestReadingDateForDevice(parseInt(id));
+    
+            if (latestData) {
+                // Jeśli istnieje najnowsze dane, zwróć je jako odpowiedź
+                response.status(200).json(latestData);
+            } else {
+                // Jeśli nie znaleziono danych, zwróć kod 404
+                response.status(404).json({ error: 'No data found for the specified device.' });
+            }
+        } catch (error) {
+            // Obsłuż błędy, np. błąd w trakcie pobierania danych
+            console.error(`Failed to get latest data for device ${id}: ${error}`);
+            response.status(500).json({ error: 'Failed to fetch latest data.' });
+        }
+    };
+    
 
 }
 
