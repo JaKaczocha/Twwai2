@@ -5,20 +5,18 @@ class UserService {
     public async createNewOrUpdate(user: IUser) {
         try {
             if (!user._id) {
-                // Ensure new users are always created with role 'user' and isAdmin set to false
-                user.role = 'user';
+                 user.role = 'user';
                 user.isAdmin = false;
                 user.active = false;
                 const dataModel = new UserModel(user);
                 return await dataModel.save();
             } else {
-                // When updating, do not allow changing role to admin unless explicitly handled elsewhere
                 const existingUser = await UserModel.findById(user._id);
                 if (!existingUser) {
                     throw new Error('User not found');
                 }
-                user.role = existingUser.role; // Preserve the existing role
-                user.isAdmin = existingUser.isAdmin; // Preserve the existing isAdmin status
+                user.role = existingUser.role; 
+                user.isAdmin = existingUser.isAdmin;
                 user.active = existingUser.active;
                 return await UserModel.findByIdAndUpdate(user._id, { $set: user }, { new: true });
             }
@@ -77,12 +75,12 @@ class UserService {
                 throw new Error('User not found');
             }
     
-            // Check if the user is an admin
+           
             if (user.isAdmin) {
                 throw new Error('Cannot change active status for admin users');
             }
     
-            // Update the active field
+            
             user.active = active;
             await user.save();
             return user;
@@ -105,7 +103,7 @@ class UserService {
     public async createNewOrUpdateAdmin(user: IUser) {
         try {
             if (!user._id) {
-                // Dodaj użytkownika z podaną rolą
+               
                 const dataModel = new UserModel(user);
                 return await dataModel.save();
             } else {
@@ -113,8 +111,8 @@ class UserService {
                 if (!existingUser) {
                     throw new Error('User not found');
                 }
-                user.role = existingUser.role; // Zachowaj istniejącą rolę
-                user.isAdmin = existingUser.isAdmin; // Zachowaj istniejący status isAdmin
+                user.role = existingUser.role; 
+                user.isAdmin = existingUser.isAdmin; 
                 user.active = existingUser.active;
                 return await UserModel.findByIdAndUpdate(user._id, { $set: user }, { new: true });
             }

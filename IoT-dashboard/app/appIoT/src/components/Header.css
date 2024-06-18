@@ -37,10 +37,10 @@
 
 .logout-icon {
   cursor: pointer;
-  width: 20px; /* Ustaw szerokość ikony */
-  height: auto; /* Ustaw wysokość ikony, aby była proporcjonalna */
+  width: 20px; 
+  height: auto; 
 }
 
 .logout-icon:hover {
-  opacity: 0.8; /* Zmniejsz nieco przezroczystość ikony po najechaniu */
+  opacity: 0.8; 
 }

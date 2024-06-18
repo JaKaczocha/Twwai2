@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './registerActivity.css'; // Importing the stylesheet for RegisterActivity
+import './registerActivity.css'; 
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';

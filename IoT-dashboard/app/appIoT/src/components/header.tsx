@@ -1,7 +1,7 @@
 import React from 'react';
-import './Header.css'; // Importowanie arkusza stylów dla nagłówka
-import logo from './logo.png'; // Importowanie logo
-import outIcon from './logout.png'; // Importowanie ikony wylogowania
+import './Header.css'; 
+import logo from './logo.png';
+import outIcon from './logout.png'; 
 import { jwtDecode } from 'jwt-decode';
 
 const Header = () => {
@@ -21,10 +21,10 @@ const Header = () => {
       });
 
       if (response.ok) {
-        localStorage.setItem('token', ''); // Czyszczenie tokenu
+        localStorage.setItem('token', '');
         alert('Logged out successfully');
-        window.location.reload(); // Odświeżenie strony po wylogowaniu
-        // Dodaj dodatkowe działania, np. przekierowanie do strony logowania
+        window.location.reload(); 
+        
       } else {
         alert('Logout failed');
       }
@@ -42,7 +42,7 @@ const Header = () => {
   if (token) {
     try {
       decodedToken = jwtDecode(token);
-      const currentTime = Math.floor(Date.now() / 1000); // Current time in seconds
+      const currentTime = Math.floor(Date.now() / 1000);
       isAuthenticated = decodedToken.exp > currentTime;
       isAdmin = decodedToken.role === 'admin';
     } catch (error) {

@@ -1,14 +1,33 @@
 import React, { useState } from 'react';
-import './PasswordForgotComponent.css'; // Importowanie arkusza stylów dla PasswordForgotComponent
+import './PasswordForgotComponent.css';
+import axios from 'axios';
 
 const PasswordForgotComponent: React.FC = () => {
   const [email, setEmail] = useState('');
+  const [message, setMessage] = useState('');
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+ 
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    // Placeholder for handling form submission
-    console.log('Password reset request submitted with:', email);
+
+    try {
+      const response = await axios.post('http://localhost:3100/api/user/reset-password', {
+        email
+      });
+
+      if (response.status === 200) {
+        localStorage.setItem('token', response.data.token);
+        window.location.href = '/login'; 
+      } else {
+      
+        console.error('Login failed');
+      }
+    } catch (error) {
+      console.error('An error occurred:', error);
+    }
   };
+
 
   return (
     <div className="password-forgot-container">
@@ -29,6 +48,7 @@ const PasswordForgotComponent: React.FC = () => {
             Send new password
           </button>
         </form>
+        {message && <p className="message">{message}</p>}
       </div>
     </div>
   );

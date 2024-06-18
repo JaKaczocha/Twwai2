@@ -20,7 +20,7 @@ const HomeActivity = () => {
         setUserData({ name, userId, exp, role });
       } catch (error) {
         console.error('Error decoding token:', error);
-        // Handle decoding error, e.g., invalid token format
+        
       }
     }
   }, []);
@@ -32,7 +32,7 @@ const HomeActivity = () => {
 
   return (
     <div style={{ height: '94vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-      {/* Dodaj obrazek */}
+      
       <img src={home} alt="Home" style={{ maxWidth: '100%', maxHeight: '100%', width: 'auto', height: 'auto' }} />
     </div>
   );

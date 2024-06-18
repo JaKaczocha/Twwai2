@@ -19,7 +19,7 @@ const DashboardActivity: React.FC = () => {
     const storedDeviceId = localStorage.getItem('selectedDeviceId');
     return storedDeviceId ? parseInt(storedDeviceId) : 1;
   });
-  const [tokenValid, setTokenValid] = useState(true); // State to track token validity
+  const [tokenValid, setTokenValid] = useState(true); 
   const [latestDateString, setLatestDateString] = useState<string>('');
 
   const chartRef = useRef<Chart | null>(null);
@@ -30,15 +30,15 @@ const DashboardActivity: React.FC = () => {
       try {
         const token = localStorage.getItem('token');
         if (!token) {
-          setTokenValid(false); // Token not found or invalid
+          setTokenValid(false); 
           return;
         }
 
-        // Decode token to get userId
+        
         const decodedToken: any = jwtDecode(token);
         const userId = decodedToken.userId;
 
-        // Fetch data using userId and selectedDeviceId
+       
         const response = await fetch(`http://localhost:3100/api/data/${selectedDeviceId}/${userId}`, {
           headers: {
             Authorization: `Bearer ${token}`
@@ -48,14 +48,14 @@ const DashboardActivity: React.FC = () => {
         if (response.ok) {
           const data = await response.json();
           setLatestReadings(data);
-          setTokenValid(true); // Token is valid
+          setTokenValid(true);
         } else {
           console.error('Failed to fetch latest readings:', response.statusText);
-          setTokenValid(false); // Failed to fetch data due to token or server error
+          setTokenValid(false); 
         }
       } catch (error) {
         console.error('Error fetching latest readings:', error);
-        setTokenValid(false); // Error occurred during fetch
+        setTokenValid(false); 
       }
     };
 
@@ -107,7 +107,7 @@ const DashboardActivity: React.FC = () => {
   };
 
   const handleDeviceChange = (deviceId: number) => {
-    setSelectedDeviceId(deviceId - 1); // Adjust deviceId here based on your application logic
+    setSelectedDeviceId(deviceId - 1); 
     localStorage.setItem('selectedDeviceId', String(deviceId - 1));
   };
 

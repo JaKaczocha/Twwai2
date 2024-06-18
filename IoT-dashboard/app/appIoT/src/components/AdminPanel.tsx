@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { jwtDecode } from 'jwt-decode';
-import './AdminPanel.css'; // Zakładam, że masz ten plik CSS
+import './AdminPanel.css'; 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 interface User {
@@ -22,11 +22,11 @@ interface User {
       if (token) {
         try {
           const decodedToken: { exp: number; role: string } = jwtDecode(token);
-          const currentTime = Math.floor(Date.now() / 1000); // Current time in seconds
+          const currentTime = Math.floor(Date.now() / 1000);
   
           if (decodedToken.exp > currentTime && decodedToken.role === 'admin') {
             setIsAdmin(true);
-            fetchUsers(token); // Fetch users if admin
+            fetchUsers(token);
           } else {
             console.error('Invalid or expired token, or user is not an admin.');
           }
@@ -47,7 +47,7 @@ interface User {
         });
         if (response.ok) {
           const data = await response.json();
-          setUsers(data); // Assuming data is an array of users
+          setUsers(data); 
           setFilteredUsers(data);
         } else {
           console.error('Failed to fetch users:', response.statusText);

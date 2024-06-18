@@ -1,17 +1,17 @@
 .btn-group {
     display: flex;
-    flex-wrap: wrap; /* pozwala na zawijanie elementów na nowe linie */
+    flex-wrap: wrap;
     justify-content: flex-start;
   }
   
   .dashboard-activity-container {
     
-    padding: 20px; /* Opcjonalne: Dodaj padding dla lepszego wyglądu */
+    padding: 20px; 
   }
 
   .btn.btn-secondary {
-    flex: 0 0 calc(10% - 8px); /* zajmuje 10% szerokości strony minus marginesy */
-    max-width: calc(10% - 8px); /* maksymalna szerokość przycisku */
+    flex: 0 0 calc(10% - 8px);
+    max-width: calc(10% - 8px); 
     background-color: #343434;
     color: #fff;
     border: 1px solid #333;
@@ -30,9 +30,9 @@
   
   .chart-container {
     max-height: 60vh;
-    height: 100%; /* Zapewnienie, że zajmie pełną wysokość rodzica */
-    width: 100%; /* Zapewnienie, że zajmie pełną szerokość rodzica */
+    height: 100%;
+    width: 100%;
     display: flex;
-    justify-content: center; /* Wyśrodkowanie zawartości wzdłuż osi poziomej */
-    align-items: center; /* Wyśrodkowanie zawartości wzdłuż osi pionowej */
+    justify-content: center; 
+    align-items: center;
   }

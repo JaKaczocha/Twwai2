@@ -2,8 +2,8 @@ import React from 'react';
 
 const DeviceList: React.FC = () => {
   const handleButtonClick = (id: number) => {
-    localStorage.setItem('selectedDeviceId', String(id)); // Save device ID to localStorage as string
-    window.location.reload(); // Refresh the page to reload DashboardActivity with new data
+    localStorage.setItem('selectedDeviceId', String(id));
+    window.location.reload(); 
   };
 
   return (

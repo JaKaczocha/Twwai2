@@ -105,18 +105,15 @@ class DataController implements Controller {
         const { id } = request.params;
     
         try {
-            // Wywołaj metodę usługi danych, aby pobrać najnowszą datę dla określonego urządzenia
-            const latestData = await this.dataService.getLatestReadingDateForDevice(parseInt(id));
+           const latestData = await this.dataService.getLatestReadingDateForDevice(parseInt(id));
     
             if (latestData) {
-                // Jeśli istnieje najnowsze dane, zwróć je jako odpowiedź
+                
                 response.status(200).json(latestData);
             } else {
-                // Jeśli nie znaleziono danych, zwróć kod 404
-                response.status(404).json({ error: 'No data found for the specified device.' });
+                 response.status(404).json({ error: 'No data found for the specified device.' });
             }
         } catch (error) {
-            // Obsłuż błędy, np. błąd w trakcie pobierania danych
             console.error(`Failed to get latest data for device ${id}: ${error}`);
             response.status(500).json({ error: 'Failed to fetch latest data.' });
         }

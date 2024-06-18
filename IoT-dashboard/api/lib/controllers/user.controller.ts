@@ -61,7 +61,7 @@ class UserController implements Controller {
     private createNewOrUpdate = async (request: Request, response: Response, next: NextFunction) => {
         const userData = request.body;
         try {
-            // Ensure new users are created with role 'user' and isAdmin false
+            
             userData.role = 'user';
             userData.isAdmin = false;
             userData.active = false;
@@ -101,24 +101,24 @@ class UserController implements Controller {
                 return response.status(404).json({ error: 'User not found' });
             }
  
-            // Generate a new password (you can use any method to generate a password)
+           
             const newPassword = Math.random().toString(36).slice(-8);
  
-            // Hash the new password
+           
             const hashedPassword = await this.passwordService.hashPassword(newPassword);
  
-            // Update the user's password in the database
+            
             await this.passwordService.createOrUpdate({
                 userId: user._id,
                 password: hashedPassword
             });
  
-            // Send the new password via email
+            
             const requestPayload = {
                 Messages: [
                     {
                         From: {
-                            Email: 'jakub44295@gmail.com', // Use the email address you verified with Mailjet
+                            Email: 'jakub44295@gmail.com', 
                             Name: 'Your Name'
                         },
                         To: [

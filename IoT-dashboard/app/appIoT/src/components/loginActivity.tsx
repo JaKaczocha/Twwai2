@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './LoginActivity.css'; // Importing the stylesheet for LoginActivity
+import './LoginActivity.css'; 
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
@@ -17,15 +17,15 @@ const LoginActivity: React.FC = () => {
           const decodedToken: any = jwtDecode(token);
 
           if (decodedToken && decodedToken.exp > Math.floor(Date.now() / 1000)) {
-            // Token is valid and not expired
-            window.location.href = '/dashboards'; // Redirect to dashboard
+            
+            window.location.href = '/dashboards';
           } else {
-            // Token is expired or invalid, clear it from localStorage
+            
             localStorage.removeItem('token');
           }
         } catch (error) {
           console.error('Error decoding token:', error);
-          localStorage.removeItem('token'); // Clear token if decoding fails
+          localStorage.removeItem('token'); 
         }
       }
     };
@@ -44,9 +44,9 @@ const LoginActivity: React.FC = () => {
 
       if (response.status === 200) {
         localStorage.setItem('token', response.data.token);
-        window.location.href = '/dashboards'; // Redirect to dashboard
+        window.location.href = '/dashboards'; 
       } else {
-        // Handle error
+      
         console.error('Login failed');
       }
     } catch (error) {

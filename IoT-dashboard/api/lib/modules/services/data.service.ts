@@ -66,7 +66,7 @@ public async createData(dataParams: IData) {
     
     public async getLatestReadingDateForDevice(deviceId: number): Promise<Date | null> {
         try {
-            // Pobierz tylko jedną najnowszą datę posortowaną malejąco
+            
             const latestData = await DataModel.findOne({ deviceId }).sort({ readingDate: -1 }).limit(1).select('readingDate').exec();
             return latestData ? latestData.readingDate : null;
         } catch (error) {
