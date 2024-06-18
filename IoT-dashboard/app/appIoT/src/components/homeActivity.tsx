@@ -5,7 +5,7 @@ interface HomeActivityProps {
   username: string; // Prop typu string, reprezentujący nazwę użytkownika
 }
 
-const HomeActivity: React.FC<HomeActivityProps> = ({ username }) => {
+const HomeActivity= () => {
   const [userData, setUserData] = useState<{ name: string; userId: string; exp: number; role: string } | null>(null);
 
   useEffect(() => {
