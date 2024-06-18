@@ -1,12 +1,14 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import NavigationBar from './components/header';
-import DashboardActivity from './components/dashboardActivity';
+
 import LoginActivity from './components/loginActivity';
 import Header from './components/header';
 import HomeActivity from './components/homeActivity';
 import PasswordForgotComponent from './components/passwordForgotComponent';
 import RegisterActivity from './components/registerComponent';
+import DashboardActivity from './components/dashboardActivity';
+import AdminPanel from './components/AdminPanel';
 
 const App: React.FC = () => {
   return (
@@ -20,6 +22,7 @@ const App: React.FC = () => {
             <Route path="/register" element={<RegisterActivity/>} />
             <Route path="/login/passwordForgot" element={<PasswordForgotComponent/>} />
             <Route path='/dashboards' element={<DashboardActivity/>}/>
+            <Route path='/adminPanel' element={<AdminPanel/>}/>
           </Routes>
         </div>
       </div>

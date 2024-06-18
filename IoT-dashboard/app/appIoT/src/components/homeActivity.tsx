@@ -5,8 +5,8 @@ interface HomeActivityProps {
   username: string; // Prop typu string, reprezentujący nazwę użytkownika
 }
 
-const HomeActivity= () => {
-  const [userData, setUserData] = useState<{ name: string; userId: string; exp: number } | null>(null);
+const HomeActivity: React.FC<HomeActivityProps> = ({ username }) => {
+  const [userData, setUserData] = useState<{ name: string; userId: string; exp: number; role: string } | null>(null);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -14,8 +14,8 @@ const HomeActivity= () => {
     if (token) {
       try {
         const decodedToken: any = jwtDecode(token);
-        const { name, userId, exp } = decodedToken;
-        setUserData({ name, userId, exp });
+        const { name, userId, exp, role } = decodedToken;
+        setUserData({ name, userId, exp, role });
       } catch (error) {
         console.error('Error decoding token:', error);
         // Handle decoding error, e.g., invalid token format
@@ -30,14 +30,16 @@ const HomeActivity= () => {
 
   return (
     <div>
-      <h1>Welcome!</h1>
+      <h1>Welcome to our site!</h1>
       <p>This is your home activity page.</p>
       <p>Feel free to explore our services and content.</p>
+      <p>This site was created as part of the Twwai2 project.</p>
 
       {userData && (
         <div>
-          <p>Name: {userData.name}</p>
+          <p>Email: {userData.name}</p>
           <p>User ID: {userData.userId}</p>
+          <p>Role: {userData.role}</p>
           <p>Expiration Date: {formatDate(userData.exp)}</p>
         </div>
       )}

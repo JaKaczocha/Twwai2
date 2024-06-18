@@ -5,8 +5,8 @@ import DataService from '../modules/services/data.service';
 import { IData } from 'modules/models/data.model';
 import Joi = require('joi');
 
-
-
+import { auth } from '../middlewares/auth.middleware';
+import { admin } from '../middlewares/admin.middleware';
 class DataController implements Controller {
     public path = '/api/data';
     public router = Router();
@@ -20,12 +20,12 @@ class DataController implements Controller {
 
     private initializeRoutes() {
         this.router.post(`${this.path}/:id`,checkIdParam,  this.addData);
-        this.router.get(`${this.path}/latest`, this.getLatestReadingsFromAllDevices);
-        this.router.get(`${this.path}/:id`,checkIdParam,  this.getEntryById);
-        this.router.get(`${this.path}/:id/latest`,checkIdParam,  this.getEntriesInRangeById);
-        this.router.get(`${this.path}/:id/:num`,checkIdParam,  this.getEntriesInRangeById);
-        this.router.delete(`${this.path}/all`, this.deleteAllEntries);
-        this.router.delete(`${this.path}/:id`,checkIdParam,  this.deleteEntryById);
+        this.router.get(`${this.path}/latest/:userId`,auth, this.getLatestReadingsFromAllDevices);
+        this.router.get(`${this.path}/:id/:userId`,auth,checkIdParam,  this.getEntryById);
+        this.router.get(`${this.path}/:id/latest/:userId`,auth,checkIdParam,  this.getEntriesInRangeById);
+        this.router.get(`${this.path}/:id/:num/:userId`,auth,checkIdParam,  this.getEntriesInRangeById);
+        this.router.delete(`${this.path}/all/:userId`,auth, admin, this.deleteAllEntries);
+        this.router.delete(`${this.path}/:id/:userId`,auth,admin,checkIdParam,  this.deleteEntryById);
     }
 
     private getEntryById = async (request: Request, response: Response, next: NextFunction) => {

@@ -39,9 +39,10 @@
     background-color: #4CAF50;
     color: #fff;
     border: none;
-    padding: 10px 20px;
+    padding: 26px 52px;
     border-radius: 4px;
     cursor: pointer;
+    font-size: 18px; /* Increase font size */
   }
   
   .login-button:hover {

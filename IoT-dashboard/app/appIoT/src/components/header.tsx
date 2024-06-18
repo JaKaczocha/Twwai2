@@ -36,6 +36,7 @@ const Header = () => {
 
   const token = localStorage.getItem('token');
   let isAuthenticated = false;
+  let isAdmin = false;
   let decodedToken: any = null;
 
   if (token) {
@@ -43,6 +44,7 @@ const Header = () => {
       decodedToken = jwtDecode(token);
       const currentTime = Math.floor(Date.now() / 1000); // Current time in seconds
       isAuthenticated = decodedToken.exp > currentTime;
+      isAdmin = decodedToken.role === 'admin';
     } catch (error) {
       console.error('Error decoding token:', error);
     }
@@ -57,11 +59,18 @@ const Header = () => {
       <nav className="nav">
         <ul>
           <li><a href="/">Home</a></li>
-          <li><a href="/dashboards">Dashboards</a></li>
+          
           {isAuthenticated ? (
-            <li><img src={outIcon} alt="Logout" className="logout-icon" onClick={handleLogout} /></li>
+            <>
+              <li><a href="/dashboards">Dashboards</a></li>
+              {isAdmin && <li><a href="/adminPanel">Admin Panel</a></li>}
+              <li><img src={outIcon} alt="Logout" className="logout-icon" onClick={handleLogout} /></li>
+            </>
           ) : (
-            <li><a href="/login">Login</a></li>
+            <>
+              <li><a href="/login">Dashboards</a></li>
+              <li><a href="/login">Login</a></li>
+            </>
           )}
         </ul>
       </nav>
