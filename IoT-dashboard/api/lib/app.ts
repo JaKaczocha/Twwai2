@@ -3,7 +3,7 @@ import bodyParser from 'body-parser';
 import morgan from 'morgan';
 import { config } from './config';
 import Controller from "./interfaces/controller.interface";
-
+const cors = require('cors');
 import mongoose from 'mongoose';
 import { logRequests } from './middlewares/logRequests.middleware';
 class App {
@@ -18,6 +18,7 @@ class App {
 
     private initializeMiddlewares(): void {
         this.app.use(bodyParser.json());
+        this.app.use(cors());
         this.app.use(logRequests);
         //this.app.use(morgan('dev'));
     }
